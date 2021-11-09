@@ -17,3 +17,4 @@ flask-cors
 pylint
 pylint-flask
 pytest
+uuid==1.30
