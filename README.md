@@ -1,1 +1,1 @@
-Boostore API
+Bookstore API
