@@ -3,7 +3,7 @@ from app.database.db import db
 from flask import current_app as app
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(40), primary_key=True, default=uuid.uuid4)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False, server_default='')
     name = db.Column(db.String(50))
