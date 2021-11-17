@@ -1,5 +1,5 @@
 from app.database.db import db
-
+import uuid
 from flask import current_app as app
 
 class User(db.Model):
