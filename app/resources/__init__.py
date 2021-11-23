@@ -2,6 +2,7 @@ from flask.blueprints import Blueprint
 from flask_restx import Api
 
 from .user import api as user_api
+from .books import api as books_api
 
 authorizations = {
     'apitoken': {
@@ -23,3 +24,4 @@ api = Api(
 
 # Initializing the API
 api.add_namespace(user_api)
+api.add_namespace(books_api)
