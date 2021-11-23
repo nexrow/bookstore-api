@@ -28,6 +28,7 @@ You can run the app either via the `wsgi.py` as Flask app, or set the create_app
 With wsgi.py:
 
 ```bash
+$ export APP_ENV=Dev
 $ export FLASK_APP=wsgi.py
 $ export FLASK_ENV=Development
 $ flask run
