@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 from flask import current_app as app
 from flask_restx import Namespace, Resource
 
-from helpers.common import status_code_responses
+from app.helpers.common import status_code_responses
 from app.models.user import User
 
 _user_parser = reqparse.RequestParser()
