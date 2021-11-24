@@ -3,7 +3,7 @@ import uuid
 from flask import current_app as app
 
 class User(db.Model):
-    id = db.Column(db.String(40), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.String(40), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(), nullable=False, server_default='')
     name = db.Column(db.String(50))
@@ -63,4 +63,3 @@ class Role(db.Model):
     @classmethod
     def find_role_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
-
