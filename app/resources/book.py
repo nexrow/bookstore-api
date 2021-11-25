@@ -3,13 +3,13 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 
 from flask_restx import Namespace, Resource
 
-from app.models.books import Books
+from app.models.book import Book
 
 _books_parser = reqparse.RequestParser()
 _books_parser.add_argument(
     "title",
     type=str,
-    required=False,
+    required=True,
     help="This field cannot be blank"
 )
 _books_parser.add_argument(
@@ -35,25 +35,25 @@ api = Namespace('books', path='/api', description='Books')
 class BookAdd(Resource):
     def post(self):
         data = _books_parser.parse_args()
-        title = data["title"]
-
+        book = Book(data['title'], data['author'], data['genre'], data['seller'])
+        
         try:            
-            title.save_to_db()
+            book.save_to_db()
             return {
-                    "message": "Book {} saved to db!".format(title)
+                    "message": "Book saved to db: {}".format(book.id)
             }, 200
         except:
             return {
-                    "message": "The book {} was not saved in the database.".format(title)
+                    "message": "The book was not saved in the database."
             }, 500
 
 @api.route('/get/<id>')
 class BookById(Resource):
     def get(self, id):
-        id = Books.find_book_by_id(id)
-        if id:
-            return id.json()
+        book = Book.find_book_by_id(id)
+        if book:
+            return book.json()
 
         return {
-                "message": "Book id not found!"
+                "message": "Book with id {} not found!".format(id)
         }, 404

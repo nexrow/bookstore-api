@@ -2,7 +2,7 @@ from flask.blueprints import Blueprint
 from flask_restx import Api
 
 from .user import api as user_api
-from .books import api as books_api
+from .book import api as books_api
 
 authorizations = {
     'apitoken': {

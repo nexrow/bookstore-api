@@ -1,9 +1,9 @@
 from app.database.db import db
 import uuid
 
-class Books(db.Model):
+class Book(db.Model):
     __tablename__ = "books"
-    id = db.Column(db.String(40), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.String(40), primary_key=True, default=lambda: str(uuid.uuid4()))
     title = db.Column(db.String(80))
     author = db.Column(db.String(80))
     genre = db.Column(db.String(50))

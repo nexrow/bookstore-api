@@ -30,7 +30,7 @@ With wsgi.py:
 ```bash
 $ export APP_ENV=Dev
 $ export FLASK_APP=wsgi.py
-$ export FLASK_ENV=Development
+$ export FLASK_ENV=development
 $ flask run
 ```
 
