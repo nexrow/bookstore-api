@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token, jwt_re
 
 from flask_restx import Namespace, Resource
 
-from app.models.books import Book
+from app.models.book import Book
 
 _books_parser = reqparse.RequestParser()
 _books_parser.add_argument(
