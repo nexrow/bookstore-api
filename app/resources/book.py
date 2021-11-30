@@ -29,7 +29,7 @@ _books_parser.add_argument(
     required=False,
 )
 
-api = Namespace('books', path='/api', description='Books')
+api = Namespace('books', path='/api/books', description='Books')
 
 @api.route('/add')
 class BookAdd(Resource):
