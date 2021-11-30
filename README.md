@@ -23,21 +23,20 @@ $ pip install -r requirements.txt
 
 ## Run the app
 
-You can run the app either via the `wsgi.py` as Flask app, or set the create_app config yourself.
+First copy `.env.sample` to a new `.env` file.
+
+You can run the app either via the `wsgi.py` as Flask app, or set the create_app config yourself in your .env file
 
 With wsgi.py:
 
+Set the `FLASK_APP` to `wsgi.py` in your `.env` file if its not set and do:
+
 ```bash
-$ export APP_ENV=Dev
-$ export FLASK_APP=wsgi.py
-$ export FLASK_ENV=development
 $ flask run
 ```
 
-or, directly:
+or, set the `FLASK_APP` environment variable to `'app:create_app("app.config.Dev")'` to set create_app config directly, and then do:
 
 ```bash
-$ export FLASK_APP='app:create_app("app.config.Dev")'
 $ flask run
 ```
-
