@@ -35,9 +35,9 @@ _user_parser.add_argument(
     help="This field cannot be blank"
 )
 
-api = Namespace('users', path='/api', description='Users')
+api = Namespace('users', path='/api/users', description='Users')
 
-@api.route('/user/<username>')
+@api.route('/<username>')
 @api.doc(responses=status_code_responses,
          security=['apitoken']
         )
