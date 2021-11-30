@@ -5,42 +5,40 @@ from flask_restx import Namespace, Resource
 
 from app.models.book import Book
 
-_books_parser = reqparse.RequestParser()
+api = Namespace('books', path='/api/books', description='Books')
+_books_parser = api.parser()
 _books_parser.add_argument(
     "title",
     type=str,
     required=True,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 _books_parser.add_argument(
     "author",
     type=str,
     required=False,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 _books_parser.add_argument(
     "genre",
     type=str,
     required=False,
+    location='json',
 )
 _books_parser.add_argument(
     "seller",
     type=str,
     required=False,
+    location='json',
 )
-
-api = Namespace('books', path='/api/books', description='Books')
 
 
 @api.route('')
-@api.expect(_books_parser, validate=True)
-@api.doc(description='Add new book', params={
-    'title': 'Book\'s title.',
-    'author': 'Book\'s author name.',
-    'genre': 'Book\'s genre.',
-    'seller': 'Book\'s seller.',
-})
+@api.doc(description='Add new book', body=_books_parser)
 class BookAdd(Resource):
+
     def post(self):
         data = _books_parser.parse_args()
         book = Book(data['title'], data['author'],

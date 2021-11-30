@@ -9,38 +9,60 @@ from flask_restx import Namespace, Resource
 from app.helpers.common import status_code_responses
 from app.models.user import User
 
-_user_parser = reqparse.RequestParser()
+api = Namespace('users', path='/api/users', description='Users')
+
+
+_user_parser = api.parser()
 _user_parser.add_argument(
     "username",
     type=str,
     required=True,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 _user_parser.add_argument(
     "password",
     type=str,
     required=True,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 _user_parser.add_argument(
     "name",
     type=str,
     required=False,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 _user_parser.add_argument(
     "email",
     type=str,
     required=False,
-    help="This field cannot be blank"
+    help="This field cannot be blank",
+    location='json',
 )
 
-api = Namespace('users', path='/api/users', description='Users')
+
+_login_parser = api.parser()
+_login_parser.add_argument(
+    "username",
+    type=str,
+    required=True,
+    help="This field cannot be blank",
+    location='json',
+)
+_login_parser.add_argument(
+    "password",
+    type=str,
+    required=True,
+    help="This field cannot be blank",
+    location='json',
+)
 
 
 @api.route('/<username>')
 @api.doc(responses=status_code_responses,
-         security=['apitoken']
+         security=['apitoken'],
          )
 class Users(Resource):
     @api.doc(description='Get User by username', params={'username': 'Users username. Example: john.'})
@@ -77,12 +99,7 @@ class UserDelete(Resource):
 @api.route('/register')
 @api.doc(responses=status_code_responses,
          security=['apitoken'],
-         params={
-             'username': 'The username. Example: john.',
-             'password': 'The password.',
-             'name': 'User\'s full  name. Example: John Doe.',
-             'email': 'User\'s email like: john.doe@example.com.',
-         }
+         body=_user_parser,
          )
 class UserRegister(Resource):
     def post(self):
@@ -112,10 +129,8 @@ class UserRegister(Resource):
 @api.route('/login')
 @api.doc(
     description='Login to generate JWT',
-    params={
-        'username': 'The username.',
-        'password': 'The password.',
-    })
+    body=_login_parser,
+)
 class UserLogin(Resource):
 
     def post(self):
