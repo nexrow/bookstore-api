@@ -66,3 +66,9 @@ class BookById(Resource):
         return {
             "message": "Book with id {} not found!".format(id)
         }, 404
+
+
+@api.route('/search/<book>')
+class Seach(Resource):
+    def get(self, book):
+        return [book.json() for book in Book.search(book)]

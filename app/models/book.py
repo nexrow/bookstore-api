@@ -1,4 +1,5 @@
 from app.database.db import db
+from sqlalchemy import and_, or_, not_
 import uuid
 
 class Book(db.Model):
@@ -39,3 +40,12 @@ class Book(db.Model):
     @classmethod
     def find_book_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+
+    @classmethod
+    def search(cls, _book):
+        return cls.query.filter(
+            or_(
+                Book.author.like("%"+_book+"%"),
+                Book.title.like("%"+_book+"%")
+            )
+        ).all()
