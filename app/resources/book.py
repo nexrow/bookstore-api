@@ -39,6 +39,7 @@ _books_parser.add_argument(
 @api.doc(description='Add new book', body=_books_parser)
 class BookAdd(Resource):
 
+    @jwt_required()
     def post(self):
         data = _books_parser.parse_args()
         book = Book(data['title'], data['author'],
@@ -46,9 +47,7 @@ class BookAdd(Resource):
 
         try:
             book.save_to_db()
-            return {
-                "message": "Book saved to db: {}".format(book.id)
-            }, 200
+            return book.json()
         except:
             return {
                 "message": "The book was not saved in the database."
@@ -58,6 +57,8 @@ class BookAdd(Resource):
 @api.route('/<id>')
 @api.doc(description='Get a book by ID.')
 class BookById(Resource):
+
+    @jwt_required()
     def get(self, id):
         book = Book.find_book_by_id(id)
         if book:
@@ -69,6 +70,7 @@ class BookById(Resource):
 
 
 @api.route('/search/<book>')
-class Seach(Resource):
+class Search(Resource):
+
     def get(self, book):
         return [book.json() for book in Book.search(book)]
