@@ -10,6 +10,7 @@ class Dev(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
     PROPAGATE_EXCEPTIONS = True
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 class Test(Config):
     TESTING = True
