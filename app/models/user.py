@@ -1,6 +1,5 @@
 from app.database.db import db
 import uuid
-from flask import current_app as app
 
 class User(db.Model):
     id = db.Column(db.String(40), primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -13,6 +12,7 @@ class User(db.Model):
         self.username = username
         self.password = password
         self.name = name
+        self.email = email
 
     def json(self):
         return {
