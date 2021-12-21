@@ -3,7 +3,7 @@ import traceback
 from functools import wraps
 from flask import flash, redirect, url_for, session, abort
 from flask import request, current_app as app
-from flask_login import current_user
+from flask_jwt_extended import current_user
 
 from app.models.user import User, Role
 
@@ -11,7 +11,7 @@ def is_admin(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        user = User.query.get(1)
+        user = User.query.get(current_user)
         role = user.roles.all()
         roles = [ r.name for r in role ]
         if not 'Admin' in roles:
